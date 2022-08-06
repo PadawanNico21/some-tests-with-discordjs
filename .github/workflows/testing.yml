@@ -13,10 +13,6 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - run: yarn test
       - name: Envoi du code coverage
         uses: actions/upload-artifact@v3
