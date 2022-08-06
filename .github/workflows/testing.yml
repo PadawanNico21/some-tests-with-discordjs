@@ -19,7 +19,7 @@ jobs:
     steps:
       - run: yarn test
       - name: Envoi du code coverage
-        uses: action/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
           path: ./coverage/Icov-report/
