@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "alwaysStrict": true,
+        "outDir": "./dist",
+        "target": "ES6",
+        "moduleResolution": "node",
+        "module": "CommonJS"
+    }
+}
