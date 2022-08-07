@@ -14,9 +14,7 @@ async function app() {
     })
 
     await client.login(process.env.DISCORD_TOKEN)
-    console.log(
-        `Connecté a discord avec succés ! (${client.user.username}#${client.user.tag})`
-    )
+    console.log(`Connecté a discord avec succés ! (${client.user.tag})`)
 }
 
 app()
