@@ -8,17 +8,16 @@
 import { REST, Routes, SlashCommandBuilder } from 'discord.js'
 import { config } from 'dotenv'
 import LogDiscordError from './utils/LogDiscordError'
+import Commands from './commands/Commands'
 
 config()
 
 async function App() {
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN)
 
-    const commands = [
-        new SlashCommandBuilder()
-            .setName('help')
-            .setDescription("Envoie l'aide"),
-    ].map((command) => command.toJSON())
+    const commands = Object.values(Commands).map((command) =>
+        command.toRestDiscordJSON()
+    )
 
     process.stdout.write('Enregistrement des commandes "slash" ...')
 
