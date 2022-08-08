@@ -22,33 +22,11 @@ async function App() {
     process.stdout.write('Enregistrement des commandes "slash" ...')
 
     try {
-        const guilds = (await rest.get(
-            Routes.userGuilds()
-        )) as RESTGetAPICurrentUserGuildsResult
+        await rest.put(Routes.applicationCommands(process.env.DISCORD_ID), {
+            body: commands,
+        })
 
-        const guildsId = guilds.map((guild) => guild.id)
-
-        const promises = []
-
-        for (const guildId of guildsId) {
-            promises.push(
-                rest.put(
-                    Routes.applicationGuildCommands(
-                        process.env.DISCORD_ID,
-                        guildId
-                    ),
-                    { body: commands }
-                )
-            )
-        }
-
-        await Promise.all(promises)
-
-        process.stdout.write(
-            `\b\b\b[OK]\nCommandes enregistrées sur ${promises.length} serveur${
-                promises.length > 1 ? 's' : ''
-            }\n`
-        )
+        process.stdout.write(`\b\b\b[OK]\n`)
     } catch (e) {
         process.stdout.write('\b\b\b[ERR]\n')
         LogDiscordError(e)
