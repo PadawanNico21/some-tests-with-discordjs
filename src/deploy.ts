@@ -5,7 +5,7 @@
  * @author PadawanNico21
  */
 
-import { REST, Routes, SlashCommandBuilder } from 'discord.js'
+import { REST, RESTGetAPICurrentUserGuildsResult, Routes } from 'discord.js'
 import { config } from 'dotenv'
 import LogDiscordError from './utils/LogDiscordError'
 import Commands from './commands/Commands'
@@ -22,14 +22,33 @@ async function App() {
     process.stdout.write('Enregistrement des commandes "slash" ...')
 
     try {
-        await rest.put(
-            Routes.applicationGuildCommands(
-                process.env.DISCORD_ID,
-                process.env.DISCORD_TARGET_GUILD_ID
-            ),
-            { body: commands }
+        const guilds = (await rest.get(
+            Routes.userGuilds()
+        )) as RESTGetAPICurrentUserGuildsResult
+
+        const guildsId = guilds.map((guild) => guild.id)
+
+        const promises = []
+
+        for (const guildId of guildsId) {
+            promises.push(
+                rest.put(
+                    Routes.applicationGuildCommands(
+                        process.env.DISCORD_ID,
+                        guildId
+                    ),
+                    { body: commands }
+                )
+            )
+        }
+
+        await Promise.all(promises)
+
+        process.stdout.write(
+            `\b\b\b[OK]\nCommandes enregistrées sur ${promises.length} serveur${
+                promises.length > 1 ? 's' : ''
+            }\n`
         )
-        process.stdout.write('\b\b\b[OK]\n')
     } catch (e) {
         process.stdout.write('\b\b\b[ERR]\n')
         LogDiscordError(e)
