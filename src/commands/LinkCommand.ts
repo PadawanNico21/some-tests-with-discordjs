@@ -25,7 +25,14 @@ export class LinkCommand extends Command {
         const emoji = interaction.options.getString('emoji', false) || '◽'
 
         try {
-            new URL(url)
+            const { protocol } = new URL(url)
+            if (['http:', 'https:', 'discord:'].indexOf(protocol) === -1) {
+                interaction.reply({
+                    ephemeral: true,
+                    content: 'Veuilliez donner une URL valide.',
+                })
+                return
+            }
         } catch {
             interaction.reply({
                 ephemeral: true,
