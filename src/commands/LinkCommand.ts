@@ -24,6 +24,16 @@ export class LinkCommand extends Command {
         const displayText = interaction.options.getString('nom', true)
         const emoji = interaction.options.getString('emoji', false) || '◽'
 
+        try {
+            new URL(url)
+        } catch {
+            interaction.reply({
+                ephemeral: true,
+                content: 'Veuilliez donner une URL valide.',
+            })
+            return
+        }
+
         const channel = await interaction.client.channels.fetch(channelId)
         if (!channel.isTextBased()) {
             interaction.reply({
