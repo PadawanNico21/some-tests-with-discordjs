@@ -6,19 +6,29 @@
 import { Client } from 'discord.js'
 import { config } from 'dotenv'
 import Command from './commands/Command'
+import Modal from './modals/Modal'
 
 config()
 
 import Commands from './commands/Commands'
+import Modals from './modals/Modals'
 
-type CommandsMap = {
-    [commandName: string]: Command
+type Map<T> = {
+    [name: string]: T
 }
 
+type CommandsMap = Map<Command>
+type ModalsMap = Map<Modal>
+
 const commands: CommandsMap = {}
+const modals: ModalsMap = {}
 
 for (const Cmd of Object.values(Commands)) {
     commands[Cmd.commandName] = new Cmd()
+}
+
+for (const modal of Object.values(Modals)) {
+    modals[modal.modalId] = new modal()
 }
 
 async function app() {
@@ -31,6 +41,9 @@ async function app() {
             const command = commands[interaction.commandName]
 
             if (command) command.execute(interaction)
+        } else if (interaction.isModalSubmit()) {
+            const modalProcessor = modals[interaction.customId]
+            if (modalProcessor) modalProcessor.execute(interaction)
         }
     })
 
