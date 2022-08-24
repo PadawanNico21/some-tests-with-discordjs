@@ -49,7 +49,7 @@ export class LinkCommand extends Command {
                 .setURL(url)
                 .setStyle(ButtonStyle.Link)
         )
-        channel.send({
+        await channel.send({
             components: [row],
         })
         interaction.reply({
