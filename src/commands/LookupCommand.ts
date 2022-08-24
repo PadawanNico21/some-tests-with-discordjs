@@ -4,7 +4,7 @@ import {
     RESTPostAPIApplicationCommandsJSONBody,
     SlashCommandBuilder,
     SlashCommandUserOption,
-    SlashCommandMentionableOption,
+    PermissionFlagsBits,
 } from 'discord.js'
 import Command from './Command'
 
@@ -32,6 +32,8 @@ export class LookupCommand extends Command {
                     .setDescription('Utilisateur à inspecter')
                     .setRequired(true)
             )
+            .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+            .setDMPermission(false)
             .toJSON()
     }
 }

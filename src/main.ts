@@ -27,11 +27,11 @@ async function app() {
     })
 
     client.on('interactionCreate', (interaction) => {
-        if (!interaction.isChatInputCommand()) return
+        if (interaction.isChatInputCommand()) {
+            const command = commands[interaction.commandName]
 
-        const command = commands[interaction.commandName]
-
-        if (command) command.execute(interaction)
+            if (command) command.execute(interaction)
+        }
     })
 
     await client.login(process.env.DISCORD_TOKEN)

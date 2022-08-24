@@ -5,7 +5,7 @@
  * @author PadawanNico21
  */
 
-import { REST, RESTGetAPICurrentUserGuildsResult, Routes } from 'discord.js'
+import { REST, Routes } from 'discord.js'
 import { config } from 'dotenv'
 import LogDiscordError from './utils/LogDiscordError'
 import Commands from './commands/Commands'
