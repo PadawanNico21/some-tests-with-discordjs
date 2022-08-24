@@ -35,12 +35,13 @@ export class PollModal extends Modal {
     async execute(
         interaction: ModalSubmitInteraction<CacheType>
     ): Promise<void> {
-        interaction.deferReply({ ephemeral: true })
+        await interaction.deferReply({ ephemeral: true })
         const title = interaction.fields.getTextInputValue('poll-title')
         const channelId = interaction.fields.getTextInputValue('poll-channel')
         const choices = interaction.fields
             .getTextInputValue('poll-choices')
             .split('\n', 40)
+            .filter((v) => !/^\s*$/.test(v))
 
         const size = choices.length
 
