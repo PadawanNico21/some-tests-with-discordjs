@@ -1,12 +1,11 @@
 import {
     ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
     CacheType,
     ChannelType,
     ChatInputCommandInteraction,
     ModalActionRowComponentBuilder,
     ModalBuilder,
+    PermissionFlagsBits,
     RESTPostAPIApplicationCommandsJSONBody,
     SlashCommandBuilder,
     SlashCommandChannelOption,
@@ -72,6 +71,7 @@ export class PollCommand extends Command {
             )
             .setName(PollCommand.commandName)
             .setDescription('Créer un sondage dans le channel donné')
+            .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
             .toJSON()
     }
 }
