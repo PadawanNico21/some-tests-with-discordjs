@@ -71,7 +71,7 @@ export class PollModal extends Modal {
                 reactPromises.push(message.react(Reactions[i]))
             }
             await Promise.all(reactPromises)
-            interaction.editReply({ content: 'Sondage créée' })
+            interaction.editReply({ content: 'Sondage créé' })
         } catch (e) {
             interaction.editReply({
                 content: 'Le channel renseigné est invalide',
